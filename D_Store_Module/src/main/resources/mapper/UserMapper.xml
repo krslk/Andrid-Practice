@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cy.store.d_store_module.mapper.UserMapper">
+
+    <!--映射规则的定义(一般放在查询语句的前面):
+        id：给这个映射关系取id，对应resultMap的值
+        type：取值为类，查询结果与Java中哪个类映射-->
+    <resultMap id="UserEntityMap" type="com.cy.store.d_store_module.entity.User">
+        <!--可以只将不之一的进行映射-,但是主键不能省略！-->
+        <!-- column：数据表中的列名 property：类成员名    -->
+        <result column="uid" property="uid"></result>
+        <result column="is_delete" property="isDelete"></result>
+    </resultMap>
+
+    <!--useGeneratedKeys：开启某个字段的值递增         keyProperty：指定自增的字段-->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="uid">
+        insert into t_user(username, password, is_delete, salt) value (#{userName},#{password},#{isDelete},#{salt})
+    </insert>
+
+    <!--resultType：查询的结果集类型-->
+    <!--当表的字段和类的成员名不一致时，自定义映射规则,resultMap表示具体规则-->
+    <select id="findByUsername" resultType="com.cy.store.d_store_module.entity.User" resultMap="UserEntityMap">
+        select *
+        from t_user
+        where username = #{userName}
+    </select>
+
+</mapper>

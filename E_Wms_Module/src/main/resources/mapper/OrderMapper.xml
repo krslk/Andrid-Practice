@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wms.e_wms_module.mapper.OrderMapper">
+
+    <!--映射规则的定义(一般放在查询语句的前面):
+        id：给这个映射关系取id，对应resultMap的值
+        type：取值为类，查询结果与Java中哪个类映射-->
+    <resultMap id="ordersMap" type="com.wms.e_wms_module.entity.Orders">
+        <!--可以只将不之一的进行映射-,但是主键不能省略！-->
+        <!-- column：数据表中的列名 property：类成员名    -->
+        <result column="id" property="id"></result>
+        <result column="orderno" property="orderNo"></result>
+        <result column="tradeno" property="tradeNo"></result>
+        <result column="status" property="status"></result>
+        <result column="payamount" property="payAmount"></result>
+        <result column="linkuserid" property="linkUserId"></result>
+        <result column="userid" property="userId"></result>
+        <result column="createtime" property="createTime"></result>
+        <result column="modifytime" property="modifyTime"></result>
+    </resultMap>
+
+
+    <!--useGeneratedKeys：开启某个字段的值递增         keyProperty：指定自增的字段-->
+    <insert id="insertOrder"  useGeneratedKeys="true" keyProperty="id">
+        insert into orders(orderno, tradeno, status, payamount, linkuserid, userid, createtime, modifytime)
+            value (#{orderNo}, #{tradeNo}, #{status}, #{payAmount}, #{linkUserId}, #{userId}, #{createTime}, #{modifyTime})
+    </insert>
+
+    <select id="selectOrderByUidAndStatus" resultMap="ordersMap">
+        select *
+        from orders
+        where userid = #{uId}
+          and status = #{status}
+    </select>
+
+</mapper>
