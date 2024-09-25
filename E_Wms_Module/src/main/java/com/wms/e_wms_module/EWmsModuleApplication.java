@@ -8,6 +8,7 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 
 @SpringBootApplication
 @MapperScan("com.wms.e_wms_module.mapper")
+@ServletComponentScan
 public class EWmsModuleApplication {
     public static void main(String[] args) {
         SpringApplication.run(EWmsModuleApplication.class, args);
